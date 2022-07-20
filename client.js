@@ -1,8 +1,6 @@
 import grpc from "@grpc/grpc-js";
 
-import { packageDefinition } from "./newsDefinition.js";
-
-const { NewsService } = grpc.loadPackageDefinition(packageDefinition);
+import { NewsService } from "./newsDefinition.js";
 
 const client = new NewsService(
   "localhost:50051",

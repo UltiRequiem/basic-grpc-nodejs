@@ -1,8 +1,5 @@
 import grpc from "@grpc/grpc-js";
-
-import { packageDefinition } from "./newsDefinition.js";
-
-const newsProto = grpc.loadPackageDefinition(packageDefinition);
+import { NewsService } from "./newsDefinition.js";
 
 const news = [
   { id: "1", title: "Note 1", body: "Content 1", postImage: "Post image 1" },
@@ -11,9 +8,13 @@ const news = [
 
 const grpcServer = new grpc.Server();
 
-grpcServer.addService(newsProto.NewsService.service, {
-  getAllNews(_, cb) {
-    cb(null, { news });
+grpcServer.addService(NewsService.service, {
+  getAllNews(error, cb) {
+    if (error) {
+      throw error;
+    }
+
+    cb(undefined, { news });
   },
 });
 
